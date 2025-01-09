@@ -1,0 +1,4 @@
+com/example/webcrawler/controller/WebCrawlerController.class
+com/example/webcrawler/model/PageMetadata.class
+com/example/webcrawler/WebCrawlerApplication.class
+com/example/webcrawler/service/WebCrawlerService.class

@@ -1,18 +1,17 @@
 package com.example.webcrawler.controller;
 
-import static org.junit.Assert.*;
-import static org.mockito.Mockito.*;
-
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
+import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.junit.MockitoJUnitRunner;
+import org.mockito.junit.jupiter.MockitoExtension;
 import com.example.webcrawler.model.PageMetadata;
 import com.example.webcrawler.service.WebCrawlerService;
 
-@RunWith(MockitoJUnitRunner.class)
+@ExtendWith(MockitoExtension.class)
 public class WebCrawlerControllerTest {
 
     @Mock
@@ -38,11 +37,13 @@ public class WebCrawlerControllerTest {
         verify(webCrawlerService).crawl(testUrl);
     }
 
-    @Test(expected = RuntimeException.class)
+    @Test
     public void testCrawlPage_ServiceThrowsException() {
-        String testUrl = "invalid-url";
-        when(webCrawlerService.crawl(testUrl)).thenThrow(new RuntimeException("Failed to crawl"));
-        
-        webCrawlerController.crawlPage(testUrl);
+        assertThrows(RuntimeException.class, () -> {
+            String testUrl = "invalid-url";
+            when(webCrawlerService.crawl(testUrl)).thenThrow(new RuntimeException("Failed to crawl"));
+
+            webCrawlerController.crawlPage(testUrl);
+        });
     }
 }

@@ -1,23 +1,23 @@
 package com.example.webcrawler.service;
 
-import static org.junit.Assert.*;
-import static org.mockito.Mockito.*;
-
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.mockito.InjectMocks;
-import org.mockito.Mock;
-import org.mockito.junit.MockitoJUnitRunner;
+import static org.junit.jupiter.api.Assertions.*;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.junit.jupiter.MockitoExtension;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import com.example.webcrawler.model.PageMetadata;
 
-@RunWith(MockitoJUnitRunner.class)
+@ExtendWith(MockitoExtension.class)
 public class WebCrawlerServiceTest {
 
-    @InjectMocks
     private WebCrawlerService webCrawlerService;
+
+    @BeforeEach
+    public void setUp() {
+        webCrawlerService = new WebCrawlerService();
+    }
 
     @Test
     public void testCrawl_Success() {
@@ -28,8 +28,10 @@ public class WebCrawlerServiceTest {
         assertEquals(testUrl, result.getUrl());
     }
 
-    @Test(expected = RuntimeException.class)
+    @Test
     public void testCrawl_InvalidUrl() {
-        webCrawlerService.crawl("invalid-url");
+        assertThrows(RuntimeException.class, () -> {
+            webCrawlerService.crawl("invalid-url");
+        });
     }
 }
